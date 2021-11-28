@@ -16,9 +16,9 @@ class HandController(threading.Thread):
     def stop(self):
         self.is_running = False
 
-    def get_mapped_coordinates(self, moving_plane_size: tuple):
-        x = self.index_coordinates[0] * moving_plane_size[0]
-        y = self.index_coordinates[0] * moving_plane_size[1]
+    def get_mapped_coordinates(self, moving_plane_size: tuple, offset: tuple):
+        x = self.index_coordinates[0] * moving_plane_size[0] + offset[0]
+        y = self.index_coordinates[0] * moving_plane_size[1] + offset[1]
         return x, y
 
     def run(self) -> None:

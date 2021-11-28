@@ -10,11 +10,11 @@ class GameMonitor:
         self.score = 0
 
     @staticmethod
-    def monitor_moving_objects(moving_object: MovingObject, moving_plane_size: tuple) -> None:
-        width, height = moving_plane_size
-        if moving_object.rect.left < 0.0 or moving_object.rect.left > width:
+    def monitor_moving_objects(moving_object: MovingObject, mov_plane_size: tuple, mov_plane_offset: tuple) -> None:
+        width, height = mov_plane_size
+        if moving_object.rect.left < mov_plane_offset[0] or moving_object.rect.left > width + mov_plane_offset[0]:
             moving_object.reset()
-        if moving_object.rect.top < 0.0 or moving_object.rect.bottom > height:
+        if moving_object.rect.top < mov_plane_offset[1] or moving_object.rect.bottom > height + mov_plane_offset[1]:
             moving_object.reset()
 
     @staticmethod
@@ -24,7 +24,7 @@ class GameMonitor:
             moving_object.reset()
         return collision
 
-    def keep_score_count(self, collision: bool) -> None:
+    def keep_score_count(self, collision: bool) -> int:
         if collision:
             self.score += 1
-            print("Current score: %s" % self.score)
+        return self.score
