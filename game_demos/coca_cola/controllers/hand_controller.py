@@ -5,13 +5,14 @@ import mediapipe as mp
 
 class HandController(threading.Thread):
 
-    def __init__(self):
+    def __init__(self, camera_index: int = 0, display_dim=(480, 420)):
         super().__init__()
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(camera_index)
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_hands = mp.solutions.hands
         self.is_running = True
         self.index_coordinates = [0, 0]
+        self.display_dim = display_dim
 
     def stop(self):
         self.is_running = False
@@ -43,7 +44,8 @@ class HandController(threading.Thread):
                         self.index_coordinates[0] = hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x
                         self.index_coordinates[1] = hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y
 
-                cv2.imshow('Hand Tracking', image)
+                resized = cv2.resize(image, self.display_dim, interpolation=cv2.INTER_AREA)
+                cv2.imshow('Hand Tracking', resized)
 
                 if cv2.waitKey(10) & 0xFF == ord('q'):
                     break

@@ -9,6 +9,9 @@ from game_demos.coca_cola.monitor.game_monitor import GameMonitor
 from game_demos.coca_cola.moving_objects.moving_object_factory import MovingObjectFactory
 
 pygame.init()
+pygame.display.set_caption('Pantalla')
+icon = pygame.image.load('images/coca_cola_icon.png')
+pygame.display.set_icon(icon)
 
 WINDOW_SIZE = width, height = 1280, 720
 GAME_WINDOW_SIZE = game_width, game_height = 854, 720
@@ -46,7 +49,7 @@ santa_bag = ControlledObject(image_filename='images/santa_bag.png',
 game_monitor = GameMonitor()
 
 # Game Controller
-hand_controller = HandController()
+hand_controller = HandController(camera_index=1)
 hand_controller.start()
 
 while 1:
